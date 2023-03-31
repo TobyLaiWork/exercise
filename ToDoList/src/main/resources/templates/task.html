@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0">
+    <title>Task System - Task</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/style.css}" />
+    <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</head>
+<body>
+
+    <div th:replace="fragments :: topbar()" />
+
+
+    <div style="margin: 20px">
+        <div>
+            <h1>Task Panel</h1>
+        </div>
+        <div>
+            <a th:if="${staff.isAdmin()}" th:href="@{/task/new}">Create New Task</a>
+<!--            <a th:href="@{/task/new}">Create New Task</a>-->
+        </div>
+
+        <div th:if="${message != null}" class="alert alert-success text-center">
+            [[${message}]]
+        </div>
+
+        <div th:if="${staff.isAdmin()}">
+            <form th:action="@{/task}" class="form-inline m-3">
+                PIC Staff ID: &nbsp;&nbsp;
+                <input type="search" name="keyword" th:value="${keyword}" class="form-control" />
+                &nbsp;&nbsp;
+                <input type="submit" value="Search" class="btn btn-primary" />
+                &nbsp;&nbsp;
+                <input type="button" value="clear" class="btn btn-secondary" onclick="clearFilter()" />
+            </form>
+        </div>
+
+        <div>
+            <table class="table table-bordered table-striped table-hover table-responsive-xl">
+                <thead class="thead-dark">
+                <tr>
+                    <th>Task ID</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th>PIC Staff</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="task: ${taskList}">
+                    <td>[[${task.id}]]</td>
+                    <td>[[${task.title}]]</td>
+                    <td>[[${task.description == '' ? "N/A" : task.description}]]</td>
+                    <td>[[${task.status}]]</td>
+                    <td>[[${task.getStaffPicName()}]]</td>
+                    <td>
+                        <a th:href="@{'/task/edit/' + ${task.id}}">Edit</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <script>
+        function clearFilter(){
+            window.location = "[[@{/task}]]"
+        }
+    </script>
+
+</body>
+</html>

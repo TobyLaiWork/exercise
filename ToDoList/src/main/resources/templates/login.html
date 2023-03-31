@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0">
+    <title>Task System - Log In</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+    <script type="text/javascript" th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</head>
+<body>
+    <h1>Login</h1>
+    <div th:if="${message != null}" class="alert alert-success text-center">
+        [[${message}]]
+    </div>
+    <div>
+        <form th:action="@{/staff/login}" th:object="${staff}" method="post" class="form-inline m-3">
+            E-mail:&nbsp;
+            <input type="email" name="email" th:field="*{email}" th:value="*{email}" lass="form-control" required />
+            &nbsp;&nbsp;
+            <input type="submit" value="Login" class="btn btn-primary" />
+
+        </form>
+        <div>
+            <p>Normal User: test@test.com</p>
+            <p>Admin User: testAdmin@test.com</p>
+        </div>
+
+    </div>
+</body>
+</html>
