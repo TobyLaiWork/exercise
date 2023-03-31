@@ -66,31 +66,37 @@
             </form>
         </div>
         <br />
-        <div>
-            <h1>To Do List Item</h1>
+        <div th:if="${toDoList.id != null}">
+            <div>
+                <h2>To Do List Item</h2>
+            </div>
+            <div>
+                <a th:href="@{'/todolist/edit/' + ${toDoList.id} + '/newitem'}">Create New To Do List Item</a>
+            </div>
+            <div>
+                <table class="table table-bordered table-striped table-hover table-responsive-xl">
+                    <thead class="thead-dark">
+                    <tr>
+                        <th>Type</th>
+                        <th>Detail</th>
+                        <th>Status</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="toDoListItem: ${toDoList.getToDoListItemSet()}">
+                        <td>[[${toDoListItem.type}]]</td>
+                        <td>[[${toDoListItem.getDetail() == '' ? "N/A" : toDoListItem.getDetail()}]]</td>
+                        <td>[[${toDoListItem.status}]]</td>
+                        <td>
+                            <a th:href="@{'/task/edit/' + ${toDoListItem.id}}">Edit</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-        <div>
-            <table class="table table-bordered table-striped table-hover table-responsive-xl">
-                <thead class="thead-dark">
-                <tr>
-                    <th>Type</th>
-                    <th>Detail</th>
-                    <th>Status</th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="toDoListItem: ${toDoList.getToDoListItemSet()}">
-                    <td>[[${toDoListItem.type}]]</td>
-                    <td>[[${toDoListItem.data == '' ? "N/A" : toDoListItem.data}]]</td>
-                    <td>[[${toDoListItem.status}]]</td>
-                    <td>
-                        <a th:href="@{'/task/edit/' + ${toDoListItem.id}}">Edit</a>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
+
 
     </div>
 

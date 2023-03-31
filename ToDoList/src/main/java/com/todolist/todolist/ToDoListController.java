@@ -2,6 +2,7 @@ package com.todolist.todolist;
 
 import com.todolist.entity.Staff;
 import com.todolist.entity.ToDoList;
+import com.todolist.entity.ToDoListItem;
 import com.todolist.staff.StaffService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -108,5 +109,17 @@ public class ToDoListController {
         return "redirect:/todolist";
     }
 
+
+    @GetMapping("/todolist/edit/{id}/newitem")
+    public String newToDoListItem(@PathVariable(name = "id") Integer id, HttpServletRequest request, Model model, @RequestParam(name="todolistId") String todolistId){
+        Staff staff = staffService.getStaffFromCookie(request);
+        ToDoList toDoList = toDoListService.get(todolistId);
+        ToDoListItem toDoListItem = new ToDoListItem();
+        model.addAttribute("staff", staff);
+        model.addAttribute("pageTitle", "New Todo List Item (List ID: " + todolistId + ")");
+        model.addAttribute("toDoList", toDoList);
+        model.addAttribute("toDoListItem", toDoListItem);
+        return "todolistitem_form";
+    }
 
 }

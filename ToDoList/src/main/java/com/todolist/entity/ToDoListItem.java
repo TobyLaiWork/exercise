@@ -53,6 +53,9 @@ public class ToDoListItem {
         return status;
     }
 
+    public String getDetail(){
+        return data;
+    }
     public void setStatus(String status) {
         this.status = status;
     }
